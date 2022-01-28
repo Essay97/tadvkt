@@ -14,7 +14,7 @@ interface Fighter: Matchable {
     var burned: Int
     val name: String
 
-    fun getDamage(): Int = Random(System.currentTimeMillis()).nextInt(maxAttack)
+    fun getDamage(): Int = Random(System.currentTimeMillis()).nextInt(maxAttack-1) + 1
 
     fun attack(enemy: Fighter) {
         val delay = 1200

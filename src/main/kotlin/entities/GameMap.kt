@@ -4,13 +4,15 @@ import util.Direction
 
 class GameMap {
     val map: MutableMap<Room, MutableMap<Direction, Room>> = mutableMapOf()
-    var entry: Room? = null
+    lateinit var entry: Room
         private set
 
-    fun addRoom(room: Room) {
-        if (map.isEmpty()) {
-            entry = room
+    // ALTERNATIVE
+    fun firstRoom(room: Room) {
+        if (map.isNotEmpty()) {
+            throw IllegalStateException("This map already has a first room, it's ${entry?.name}")
         }
+        entry = room
         map[room] = mutableMapOf()
     }
 
