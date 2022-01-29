@@ -16,6 +16,7 @@ class KeyLockItem(name: String, description: String, private val effect: KeyLock
     override fun use(player: Player) {
         effect.activate(player)
         player.inventory.remove(this)
+        println("${player.name} opened the door from ${effect.source.name} to ${effect.destination.name} using ${this.name}")
     }
 }
 
@@ -35,6 +36,7 @@ class EquipItem(name: String, description: String, private val effect: StatsEffe
         player.equip[bodyPart] = this
         player.inventory.remove(this)
         effect.activate(player)
+        println("${player.name} equipped ${this.name}")
     }
 
     fun revert(player: Player) {

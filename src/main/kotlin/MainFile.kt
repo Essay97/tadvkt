@@ -1,31 +1,47 @@
+import commands.Command
 import entities.GameMap
+import entities.GameState
 import entities.Room
+import entities.items.*
 import entities.people.*
+import util.Direction
+import util.EquipPart
 
 fun main() {
     val map = GameMap()
 
     // Map creation
     // Create test room
-    makeTestRoom(map)
+    val test = makeTestRoom(map)
+
+    val eq1 = EquipItem("sword", "sword poison +3", StatsEffect(poison = 3), EquipPart.RIGHT_HAND)
+    val eq2 = EquipItem("knife", "knife stun +2", StatsEffect(stun = 2), EquipPart.RIGHT_HAND)
+    val eq3 = EquipItem("bracelet", "bracelet attack +6", StatsEffect(attack = 6), EquipPart.WRIST)
+    val kl = KeyLockItem("key", "opens side room", KeyLockEffect(
+        source = test,
+        destination = Room("side", "side room"),
+        direction = Direction.E
+    ))
+
+
+
+    test.items.addAll(listOf(eq1, eq2, eq3, kl))
 
     val player = makePlayer(map)
-    println(player.currentRoom.name)
-    player.currentRoom.npcs.firstOrNull()?.let {
-        when (it) {
-            is FighterNPC -> {
-                it.attack(player)
-            }
-            is TalkerNPC -> {
-                it.talk()
-            }
-            else -> {
-                println("${it.name} is just a random character")
-            }
-        }
-    }
+
+    val state = GameState()
+    Command.make("move E", player, state).execute()
+    kl.use(player)
+    Command.make("move E", player, state).execute()
+
+    Command.make("grab key", player, state).execute()
+    Command.make("inventory", player, state).execute()
+    println(player.currentRoom.items.map { it.name }.joinToString(", "))
+
+
 
 }
+
 
 fun makePlayer(map: GameMap): Player {
     return Player("Enrico", "This is the player of the game").apply {
@@ -55,3 +71,4 @@ fun makeTalker(): TalkerNPC {
 fun makeFighter(): FighterNPC {
     return FighterNPC("Fighter", "Fighter character for testing purposes", 10, 3)
 }
+

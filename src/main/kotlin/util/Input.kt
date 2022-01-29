@@ -9,4 +9,8 @@ object Input {
         print("-> ")
         return s.nextLine()
     }
+
+    fun extractArgument(cmd: String, input: String): String{
+        return input.substring(cmd.length).trim()
+    }
 }

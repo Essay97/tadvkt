@@ -8,7 +8,7 @@ interface Effect {
     fun activate(player: Player)
 }
 
-class KeyLockEffect(private val source: Room, private val destination: Room, private val direction: Direction): Effect {
+class KeyLockEffect(val source: Room, val destination: Room, private val direction: Direction): Effect {
     override fun activate(player: Player) {
         if (player.currentRoom == source) {
             player.gameMap?.set(source, destination, direction)

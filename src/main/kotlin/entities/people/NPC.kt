@@ -3,7 +3,7 @@ package entities.people
 abstract class NPC(name: String, description: String) : Character(name, description)
 
 class TalkerNPC(name: String, description: String) : NPC(name, description), Talker {
-    override var dialogue: Dialogue? = null
+    override lateinit var dialogue: Dialogue
 }
 
 class FighterNPC(name: String, description: String,
@@ -20,5 +20,5 @@ class FighterTalkerNPC(name: String, description: String,
     override var stunned = 0
     override var poisoned = 0
     override var burned = 0
-    override var dialogue: Dialogue? = null
+    override lateinit var dialogue: Dialogue
 }
