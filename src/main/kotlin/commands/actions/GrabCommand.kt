@@ -16,4 +16,10 @@ class GrabCommand(private val player: Player, state: GameState, private val item
             println("Oh, you can't grab that")
         }
     }
+
+    override fun undoAction() {
+        player.inventory.remove(item)
+        println("${player.name} threw " + item?.name + " away.")
+        player.currentRoom.items.add(item!!)
+    }
 }

@@ -17,6 +17,7 @@ fun main() {
     val eq1 = EquipItem("sword", "sword poison +3", StatsEffect(poison = 3), EquipPart.RIGHT_HAND)
     val eq2 = EquipItem("knife", "knife stun +2", StatsEffect(stun = 2), EquipPart.RIGHT_HAND)
     val eq3 = EquipItem("bracelet", "bracelet attack +6", StatsEffect(attack = 6), EquipPart.WRIST)
+    val shot = OneShotItem("arrow", "arrow attack +2", StatsEffect(attack = 2))
     val kl = KeyLockItem("key", "opens side room", KeyLockEffect(
         source = test,
         destination = Room("side", "side room"),
@@ -25,19 +26,14 @@ fun main() {
 
 
 
-    test.items.addAll(listOf(eq1, eq2, eq3, kl))
+    test.items.addAll(listOf(eq1, eq2, eq3, kl, shot))
 
     val player = makePlayer(map)
 
     val state = GameState()
-    Command.make("move E", player, state).execute()
-    kl.use(player)
-    Command.make("move E", player, state).execute()
 
-    Command.make("grab key", player, state).execute()
-    Command.make("inventory", player, state).execute()
-    println(player.currentRoom.items.map { it.name }.joinToString(", "))
-
+    Command.make("grab arrow", player, state)?.execute()
+    Command.make("fight Fighter", player, state)?.execute()
 
 
 }
