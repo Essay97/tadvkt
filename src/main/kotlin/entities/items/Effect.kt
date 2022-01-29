@@ -18,7 +18,8 @@ class KeyLockEffect(private val source: Room, private val destination: Room, pri
     }
 }
 
-class StatsEffect(val hpDelta: Int, val poison: Int, val stun: Int, val burn: Int, val attack: Int): Effect {
+class StatsEffect(val hpDelta: Int = 0, val poison: Int = 0, val stun: Int = 0, val burn: Int = 0, val attack: Int = 0) :
+    Effect {
     override fun activate(player: Player) {
         player.apply {
             hp += hpDelta
