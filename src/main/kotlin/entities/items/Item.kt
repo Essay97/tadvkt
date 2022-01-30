@@ -49,5 +49,6 @@ class EquipItem(name: String, description: String, private val effect: StatsEffe
         }
         player.inventory.add(this)
         player.equip.remove(bodyPart)
+        println("${player.name} took off ${this.name}")
     }
 }

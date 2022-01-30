@@ -3,16 +3,16 @@ package commands
 import java.util.*
 
 object Invoker {
-    private val stack: Deque<Command> = LinkedList()
+    private val history: Deque<Command> = LinkedList()
 
     fun invoke(command: Command) {
         command.execute()
         if (command.reversible) {
-            stack.addLast(command)
+            history.addLast(command)
         }
     }
 
     fun uninvoke() {
-        stack.pollLast()?.unexecute() ?: println("You can't go back further")
+        history.pollLast()?.unexecute() ?: println("You can't go back further")
     }
 }

@@ -1,5 +1,6 @@
-package commands
+package commands.actions
 
+import commands.Command
 import entities.GameState
 import entities.Movable
 import entities.people.Player

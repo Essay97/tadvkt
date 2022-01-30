@@ -1,0 +1,52 @@
+rooms: 
+  # First room
+  - name: Test room
+    description: This is a sandbox room where we can test things out
+    items:
+      - name: sword
+        description: sword attack +3
+        matchers: [katana, glaive]
+        equip:
+          part: RIGHT_HAND
+          attack: 3
+      - name: bread
+        description: bread hp +2
+        matchers: [food]
+        oneShot:
+          hp: 2
+      - name: key
+        description: key opens side room
+        matchers: [keys]
+        keyLock:
+          source: Test room
+          destination:
+            name: Side room
+            description: Side room created with key lock
+            items:
+              - name: foo
+                description: just a test item in key lock room
+          direction: W
+      - name: random
+        description: random observable not grabbable
+    npcs:
+      - name: wizard
+        description: a talker wizard
+        dialogue: 
+          - message: First question
+            responses: 
+              - first response
+              - second response
+          - message: Second question
+            responses: 
+              - first response
+              - second response
+      - name: warrior
+        description: a fighter warrior
+        hp: 10
+        maxAttack: 4
+    connections: 
+      N: Little room
+  # Second room
+  - name: Little room
+    description: Little empty room
+

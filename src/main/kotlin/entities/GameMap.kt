@@ -10,7 +10,7 @@ class GameMap {
     // ALTERNATIVE
     fun firstRoom(room: Room) {
         if (map.isNotEmpty()) {
-            throw IllegalStateException("This map already has a first room, it's ${entry?.name}")
+            throw IllegalStateException("This map already has a first room, it's ${entry.name}")
         }
         entry = room
         map[room] = mutableMapOf()

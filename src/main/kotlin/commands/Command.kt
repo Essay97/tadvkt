@@ -4,6 +4,7 @@ import commands.actions.*
 import commands.data.*
 import entities.Examinable
 import entities.GameState
+import entities.items.EquipItem
 import entities.items.GrabbableItem
 import entities.people.Fighter
 import entities.people.Player
@@ -14,7 +15,7 @@ import util.Input
 abstract class Command(val reversible: Boolean, val counting: Boolean, val state: GameState? = null) {
     fun execute() {
         if (counting) {
-            state?.actionsCount = state?.actionsCount?.plus(1) ?: throw IllegalStateException(
+            state?.incrementActionsCount() ?: throw IllegalStateException(
                 "${this::class.simpleName} supports counting, therefore state cannot be null"
             )
         }
@@ -26,7 +27,7 @@ abstract class Command(val reversible: Boolean, val counting: Boolean, val state
             throw UnsupportedOperationException("${this::class.simpleName} does not support undo operation")
         }
         if (counting) {
-            state?.actionsCount = state?.actionsCount?.minus(1) ?: throw IllegalStateException(
+            state?.decreaseActionsCount() ?: throw IllegalStateException(
                 "${this::class.simpleName} supports counting, therefore state cannot be null"
             )
         }
@@ -80,6 +81,13 @@ abstract class Command(val reversible: Boolean, val counting: Boolean, val state
                 return FightCommand(player, state, fighter)
             }
 
+            // takeoff
+            if (input.startsWith("takeoff")) {
+                val arg = Input.extractArgument("takeoff", input)
+                val equippable = findInEquip(arg, player)
+                return TakeOffCommand(player, state, equippable)
+            }
+
 
             return when (input) {
                 "inventory" -> InventoryCommand(player)
@@ -120,6 +128,10 @@ abstract class Command(val reversible: Boolean, val counting: Boolean, val state
         private fun findFighter(arg: String, player: Player): Fighter? {
             val fighter = player.currentRoom.npcs.firstOrNull {it.matches(arg) && it is Fighter }
             return if (fighter != null) fighter as Fighter else null
+        }
+
+        private fun findInEquip(arg: String, player: Player): EquipItem? {
+            return player.equip.values.firstOrNull { it.matches(arg) }
         }
     }
 }

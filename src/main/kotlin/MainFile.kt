@@ -24,16 +24,19 @@ fun main() {
         direction = Direction.E
     ))
 
-
-
     test.items.addAll(listOf(eq1, eq2, eq3, kl, shot))
 
     val player = makePlayer(map)
 
     val state = GameState()
 
-    Command.make("grab arrow", player, state)?.execute()
-    Command.make("fight Fighter", player, state)?.execute()
+    Command.make("grab bracelet", player, state)?.execute()
+    Command.make("use bracelet", player, state)?.execute()
+    Command.make("equip", player, state)?.execute()
+    Command.make("inventory", player, state)?.execute()
+    Command.make("takeoff bracelet", player, state)?.execute()
+    Command.make("equip", player, state)?.execute()
+    Command.make("inventory", player, state)?.execute()
 
 
 }
