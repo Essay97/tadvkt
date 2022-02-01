@@ -1,12 +1,10 @@
 package entities
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
 import exceptions.DeserializingException
 import util.Direction
 import util.getRoomByID
 import util.insertNotNull
-
 
 
 class GameMap() {
@@ -39,24 +37,26 @@ class GameMap() {
 
     private val rooms: MutableMap<String, Room> = mutableMapOf()
     private val connections: MutableMap<String, MutableMap<Direction, String>> = mutableMapOf()
-    private val map: MutableMap<Room, MutableMap<Direction, Room>> = mutableMapOf()
     lateinit var entry: Room
         private set
 
     fun firstRoom(room: Room) {
-        if (map.isNotEmpty()) {
+        if (connections.isNotEmpty()) {
             throw IllegalStateException("This map already has a first room, it's ${entry.name}")
         }
         entry = room
-        map[room] = mutableMapOf()
+        rooms[room.name] = room
+        connections[room.name] = mutableMapOf()
     }
 
-    fun get(room: Room, direction: Direction) = map[room]?.get(direction)
+    fun get(room: Room, direction: Direction): Room? = getRoomByName(connections[room.name]?.get(direction)
+        ?: throw IllegalStateException("The current map does not have a room called ${room.name}"))
 
     fun set(room: Room, newRoom: Room, direction: Direction) {
-        map[room]?.set(direction, newRoom)
-        map[newRoom] = mutableMapOf(direction.opposite() to room)
+        connections[room.name]?.set(direction, newRoom.name)
+        rooms[newRoom.name] = newRoom
+        connections[newRoom.name] = mutableMapOf(direction.opposite() to room.name)
     }
 
-    fun getRoomByName(name: String): Room? = map.entries.singleOrNull { it.key.matches(name) }?.key
+    fun getRoomByName(name: String): Room? = rooms[name]
 }
