@@ -1,0 +1,43 @@
+name: Test room
+description: This is a sandbox room where we can test things out
+items:
+  - name: sword
+    description: sword attack +3
+    matchers: [katana]
+    type: EQUIP
+    effect:
+      attack: 3
+    bodyPart: RIGHT_HAND
+  - name: bread
+    description: bread hp +2
+    matchers: [food]
+    type: ONE_SHOT
+    effect:
+      hp: 2
+npcs:
+  - name: warrior
+    description: a fighter warrior
+    type: FIGHTER
+    hp: 10
+    maxAttack: 4
+  - name: wizard
+    description: a talker wizard
+    type: TALKER
+    dialogue:
+      - message: question 1?
+        responses:
+          - OK
+          - No
+      - message: question 2?
+        responses:
+          - response 1
+          - response 2
+  - name: sensei
+    description: a character that can talk and fight
+    type: FIGHTER_TALKER
+    hp: 12
+    maxAttack: 3
+    dialogue:
+      - message: wanna fight?
+        responses: [yes, no]
+

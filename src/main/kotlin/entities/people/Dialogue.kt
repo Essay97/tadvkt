@@ -1,15 +1,18 @@
 package entities.people
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import util.Input
 import util.Output
 
+@JsonDeserialize(`as` = DialogueTemplate::class)
 interface Dialogue {
     fun doDialogue(talkerName: String)
 }
 
 class DialogueChunk(val message: String, val responses: List<String>)
 
-class DialogueTemplate(private val chunks: List<DialogueChunk>): Dialogue {
+class DialogueTemplate(@JsonUnwrapped private val chunks: List<DialogueChunk>): Dialogue {
     override fun doDialogue(talkerName: String) {
         val delay = 1200
         chunks.forEach {

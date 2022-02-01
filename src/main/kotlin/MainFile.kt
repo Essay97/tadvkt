@@ -1,9 +1,10 @@
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import entities.GameMap
 import entities.Room
 import entities.people.*
-import setup.JacksonMapBuilder
-import setup.JacksonPlayerBuilder
 import java.io.File
 
 fun main() {
@@ -37,11 +38,10 @@ fun main() {
     Command.make("equip", player, state)?.execute()
     Command.make("inventory", player, state)?.execute()*/
 
-    val playerBuilder = JacksonPlayerBuilder(YAMLFactory(), File("player.yml"))
-    val mapBuilder = JacksonMapBuilder(YAMLFactory(), File("map.yml"))
+    val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
 
-    val player = playerBuilder.build()
-    println("${player.name}: ${player.description}")
+    val room = mapper.readValue<Room>(File("room.yml"))
+    println(room.npcs.joinToString { it::class.simpleName.toString() })
 }
 
 
