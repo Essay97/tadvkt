@@ -6,11 +6,13 @@ maxAttack: 10
 items:
   - name: thing
     description: just a test
-    oneShot:
+    type: ONE_SHOT
+    effect:
       poison: -3
 equip:
   - name: shield
     description: this shield is equipped by default
-    equip:
-      part: LEFT_HAND
+    type: EQUIP
+    effect:
       stun: -1
+    bodyPart: LEFT_HAND

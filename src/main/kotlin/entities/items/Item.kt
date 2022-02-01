@@ -1,9 +1,17 @@
 package entities.items
 
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import entities.Examinable
 import entities.people.Player
 import util.EquipPart
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", defaultImpl = Item::class)
+@JsonSubTypes(
+    JsonSubTypes.Type(value = KeyLockItem::class, name = "KEY_LOCK"),
+    JsonSubTypes.Type(value = OneShotItem::class, name = "ONE_SHOT"),
+    JsonSubTypes.Type(value = EquipItem::class, name = "EQUIP")
+)
 open class Item(val name: String, override var description: String) : Examinable {
     override val matchers = mutableSetOf(name)
 }
@@ -13,8 +21,6 @@ abstract class GrabbableItem(name: String, description: String) : Item(name, des
 }
 
 class KeyLockItem(name: String, description: String, private val effect: KeyLockEffect) : GrabbableItem(name, description) {
-
-    constructor(item: Item, effect: KeyLockEffect) : this(item.name, item.description, effect)
 
     override fun use(player: Player) {
         effect.activate(player)
@@ -26,8 +32,6 @@ class KeyLockItem(name: String, description: String, private val effect: KeyLock
 class OneShotItem(name: String, description: String, private val effect: StatsEffect) :
     GrabbableItem(name, description) {
 
-    constructor(item: Item, effect: StatsEffect) : this(item.name, item.description, effect)
-
     override fun use(player: Player) {
         effect.activate(player)
         println("${player.name} used ${this.name}")
@@ -37,8 +41,6 @@ class OneShotItem(name: String, description: String, private val effect: StatsEf
 
 class EquipItem(name: String, description: String, private val effect: StatsEffect, val bodyPart: EquipPart) :
     GrabbableItem(name, description) {
-
-    constructor(item: Item, effect: StatsEffect, part: EquipPart) : this(item.name, item.description, effect, part)
 
     override fun use(player: Player) {
         player.equip[bodyPart]?.revert(player)
