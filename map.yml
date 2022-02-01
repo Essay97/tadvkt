@@ -15,6 +15,15 @@ rooms:
         type: ONE_SHOT
         effect:
           hp: 2
+      - name: key
+        description: opens a little room
+        type: KEY_LOCK
+        effect:
+          source: Test room
+          destination:
+            name: Little room
+            description: room opened with a key/lock item
+          direction: E
     npcs:
       - name: warrior
         description: a fighter warrior

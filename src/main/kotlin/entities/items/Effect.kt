@@ -9,9 +9,12 @@ interface Effect {
     fun activate(player: Player)
 }
 
-// TODO handle deserialization, since linking rooms is complicated
-class KeyLockEffect(val source: Room, val destination: Room, private val direction: Direction): Effect {
+class KeyLockEffect(@JsonProperty("source") val sourceID: String, val destination: Room, private val direction: Direction):
+    Effect {
     override fun activate(player: Player) {
+        val source = player.gameMap?.getRoomByName(sourceID)
+            ?: throw IllegalStateException("The effect of the key/lock item is bad formed: the room $sourceID does not " +
+                    "exist in the current map")
         if (player.currentRoom == source) {
             player.gameMap?.set(source, destination, direction)
         } else {

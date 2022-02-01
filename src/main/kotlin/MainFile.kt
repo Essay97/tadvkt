@@ -4,7 +4,9 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import entities.GameMap
 import entities.Room
+import entities.items.KeyLockItem
 import entities.people.*
+import setup.JacksonPlayerBuilder
 import util.Direction
 import java.io.File
 
@@ -42,11 +44,12 @@ fun main() {
 
     val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
 
-    //val player = JacksonPlayerBuilder(YAMLFactory(), "player.yml").build()
+    val player = JacksonPlayerBuilder(YAMLFactory(), "player.yml").build()
     //val map = JacksonMapBuilder(YAMLFactory(), "map.yml").build()
 
     val anotherMap = mapper.readValue<GameMap>(File("map.yml"))
-    println(anotherMap.get(anotherMap.entry, Direction.N)?.description)
+
+    println()
 }
 
 

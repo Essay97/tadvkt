@@ -1,8 +1,9 @@
 package entities
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo
+import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import entities.items.Item
 import entities.people.NPC
-
 
 class Room(val name: String, override var description: String) : Examinable {
 

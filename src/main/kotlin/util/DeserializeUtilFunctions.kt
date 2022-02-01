@@ -3,8 +3,6 @@ package util
 import entities.GameMap
 import entities.Room
 import exceptions.DeserializingException
-import java.lang.annotation.ElementType
-import java.lang.annotation.RetentionPolicy
 
 
 fun getRoomByID(id: String?, rooms:List<Room>): Room? {

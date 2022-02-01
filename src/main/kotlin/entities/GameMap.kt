@@ -7,10 +7,10 @@ import util.Direction
 import util.getRoomByID
 import util.insertNotNull
 
-private class Connection(val roomID: String, val N: String?, val S: String?, val W: String?, val E: String?)
+
 
 class GameMap() {
-
+    private class Connection(val roomID: String, val N: String?, val S: String?, val W: String?, val E: String?)
     @Suppress("unused")
     @JsonCreator
     private constructor(rooms: List<Room>, connections: List<Connection>) : this() {
@@ -19,6 +19,7 @@ class GameMap() {
         connections.forEach { conn ->
             val room = getRoomByID(conn.roomID, rooms)
                 ?: throw DeserializingException("Trying to reference an undeclared roomID: ${conn.roomID}")
+            println("Working on ${room.name}")
             val roomN = getRoomByID(conn.N, rooms)
             val roomS = getRoomByID(conn.S, rooms)
             val roomE = getRoomByID(conn.E, rooms)
@@ -36,6 +37,8 @@ class GameMap() {
     }
 
 
+    private val rooms: MutableMap<String, Room> = mutableMapOf()
+    private val connections: MutableMap<String, MutableMap<Direction, String>> = mutableMapOf()
     private val map: MutableMap<Room, MutableMap<Direction, Room>> = mutableMapOf()
     lateinit var entry: Room
         private set
@@ -50,14 +53,10 @@ class GameMap() {
 
     fun get(room: Room, direction: Direction) = map[room]?.get(direction)
 
-    fun set(room: Room, newRoom: Room, direction: Direction) = map[room]?.set(direction, newRoom)
+    fun set(room: Room, newRoom: Room, direction: Direction) {
+        map[room]?.set(direction, newRoom)
+        map[newRoom] = mutableMapOf(direction.opposite() to room)
+    }
 
     fun getRoomByName(name: String): Room? = map.entries.singleOrNull { it.key.matches(name) }?.key
-
-    // DESERIALIZATION LOGIC
-    @Suppress("unused")
-    @JsonProperty("rooms")
-    private fun deserializeRoot(data: List<Room>) {
-        println("THE ROOMS ARE: $data")
-    }
 }
