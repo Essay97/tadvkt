@@ -1,52 +1,50 @@
 rooms:
-  # First room
   - name: Test room
     description: This is a sandbox room where we can test things out
     items:
       - name: sword
         description: sword attack +3
-        matchers: [katana, glaive]
-        equip:
-          part: RIGHT_HAND
+        matchers: [ katana ]
+        type: EQUIP
+        effect:
           attack: 3
+        bodyPart: RIGHT_HAND
       - name: bread
         description: bread hp +2
-        matchers: [food]
-        oneShot:
+        matchers: [ food ]
+        type: ONE_SHOT
+        effect:
           hp: 2
-#      - name: key
-#        description: key opens side room
-#        matchers: [keys]
-#        keyLock:
-#          source: Test room
-#          destination:
-#            name: Side room
-#            description: Side room created with key lock
-#            items:
-#              - name: foo
-#                description: just a test item in key lock room
-#          direction: W
-      - name: random
-        description: random observable not grabbable
     npcs:
-      - name: wizard
-        description: a talker wizard
-        dialogue: 
-          - message: First question
-            responses: 
-              - first response
-              - second response
-          - message: Second question
-            responses: 
-              - first response
-              - second response
       - name: warrior
         description: a fighter warrior
+        type: FIGHTER
         hp: 10
         maxAttack: 4
-    connections: 
-      N: Little room
-  # Second room
-  - name: Little room
-    description: Little empty room
-
+      - name: wizard
+        description: a talker wizard
+        type: TALKER
+        dialogue:
+          - message: question 1?
+            responses:
+              - OK
+              - No
+          - message: question 2?
+            responses:
+              - response 1
+              - response 2
+      - name: sensei
+        description: a character that can talk and fight
+        type: FIGHTER_TALKER
+        hp: 12
+        maxAttack: 3
+        dialogue:
+          - message: wanna fight?
+            responses: [ yes, no ]
+  - name: Side room
+    description: a side room connected to the first one
+connections:
+  - roomID: Test room
+    N: Side room
+  - roomID: Side room
+    S: Test room

@@ -31,11 +31,11 @@ class DummyPlayerBuilder: PlayerBuilder() {
     }
 }
 
-class JacksonPlayerBuilder(factory: JsonFactory, private val file: File): PlayerBuilder(), JacksonBuilder {
+class JacksonPlayerBuilder(factory: JsonFactory, override val fileName: String): PlayerBuilder(), JacksonBuilder {
     override val mapper = ObjectMapper(factory).registerKotlinModule()
 
     override fun build(): Player {
-        return mapper.readValue(file)
+        return mapper.readValue(File(fileName))
     }
 }
 

@@ -5,43 +5,48 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import entities.GameMap
 import entities.Room
 import entities.people.*
+import util.Direction
 import java.io.File
 
 fun main() {
-    val map = GameMap()
 
-    // Map creation
-    // Create test room
-    /*val test = makeTestRoom(map)
-
-    val eq1 = EquipItem("sword", "sword poison +3", StatsEffect(poison = 3), EquipPart.RIGHT_HAND)
-    val eq2 = EquipItem("knife", "knife stun +2", StatsEffect(stun = 2), EquipPart.RIGHT_HAND)
-    val eq3 = EquipItem("bracelet", "bracelet attack +6", StatsEffect(attack = 6), EquipPart.WRIST)
-    val shot = OneShotItem("arrow", "arrow attack +2", StatsEffect(attack = 2))
-    val kl = KeyLockItem("key", "opens side room", KeyLockEffect(
-        source = test,
-        destination = Room("side", "side room"),
-        direction = Direction.E
-    ))
-
-    test.items.addAll(listOf(eq1, eq2, eq3, kl, shot))
-
-    val player = makePlayer(map)
-
-    val state = GameState()
-
-    Command.make("grab bracelet", player, state)?.execute()
-    Command.make("use bracelet", player, state)?.execute()
-    Command.make("equip", player, state)?.execute()
-    Command.make("inventory", player, state)?.execute()
-    Command.make("takeoff bracelet", player, state)?.execute()
-    Command.make("equip", player, state)?.execute()
-    Command.make("inventory", player, state)?.execute()*/
+//    // Map creation
+//    // Create test room
+//    val map = GameMap()
+//    val test = makeTestRoom(map)
+//
+//    val eq1 = EquipItem("sword", "sword poison +3", StatsEffect(poison = 3), EquipPart.RIGHT_HAND)
+//    val eq2 = EquipItem("knife", "knife stun +2", StatsEffect(stun = 2), EquipPart.RIGHT_HAND)
+//    val eq3 = EquipItem("bracelet", "bracelet attack +6", StatsEffect(attack = 6), EquipPart.WRIST)
+//    val shot = OneShotItem("arrow", "arrow attack +2", StatsEffect(attack = 2))
+//    val kl = KeyLockItem("key", "opens side room", KeyLockEffect(
+//        source = test,
+//        destination = Room("side", "side room"),
+//        direction = Direction.E
+//    )
+//    )
+//
+//    test.items.addAll(listOf(eq1, eq2, eq3, kl, shot))
+//
+//    val player = makePlayer(map)
+//
+//    val state = GameState()
+//
+//    Command.make("grab bracelet", player, state)?.execute()
+//    Command.make("use bracelet", player, state)?.execute()
+//    Command.make("equip", player, state)?.execute()
+//    Command.make("inventory", player, state)?.execute()
+//    Command.make("takeoff bracelet", player, state)?.execute()
+//    Command.make("equip", player, state)?.execute()
+//    Command.make("inventory", player, state)?.execute()
 
     val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
 
-    val room = mapper.readValue<Room>(File("room.yml"))
-    println(room.npcs.joinToString { it::class.simpleName.toString() })
+    //val player = JacksonPlayerBuilder(YAMLFactory(), "player.yml").build()
+    //val map = JacksonMapBuilder(YAMLFactory(), "map.yml").build()
+
+    val anotherMap = mapper.readValue<GameMap>(File("map.yml"))
+    println(anotherMap.get(anotherMap.entry, Direction.N)?.description)
 }
 
 

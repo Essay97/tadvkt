@@ -28,11 +28,11 @@ class DummyMapBuilder: MapBuilder() {
     }
 }
 
-class JacksonMapBuilder(factory: JsonFactory, private val file: File): MapBuilder(), JacksonBuilder {
+class JacksonMapBuilder(factory: JsonFactory, override val fileName: String): MapBuilder(), JacksonBuilder {
     override val mapper = ObjectMapper(factory).registerKotlinModule()
 
     override fun build(): GameMap {
-        return mapper.readValue(file)
+        return mapper.readValue(File(fileName))
     }
 }
 

@@ -6,7 +6,6 @@ import entities.Movable
 import entities.Room
 import entities.items.EquipItem
 import entities.items.GrabbableItem
-import entities.items.Item
 import exceptions.DeserializingException
 import util.Direction
 import util.EquipPart
@@ -52,17 +51,13 @@ class Player(name: String, description: String) : Character(name, description), 
     // DESERIALIZATION LOGIC
     @Suppress("unused")
     @JsonProperty("equip")
-    private fun equipListToMap(items: List<Item>) {
-        if (items.all { it is EquipItem }) {
-            items.map { it as EquipItem }.forEach {
-                if (equip.containsKey(it.bodyPart)) {
-                    throw DeserializingException("The equip of the player is bad formed: body parts can be equipped only once")
-                } else {
-                    equip[it.bodyPart] = it
-                }
+    private fun equipListToMap(items: List<EquipItem>) {
+        items.forEach {
+            if (equip.containsKey(it.bodyPart)) {
+                throw DeserializingException("The equip of the player is bad formed: body parts can be equipped only once")
+            } else {
+                equip[it.bodyPart] = it
             }
-        } else {
-            throw DeserializingException("The equip of the player is bad formed: all the items must have an equip attribute")
         }
     }
 }

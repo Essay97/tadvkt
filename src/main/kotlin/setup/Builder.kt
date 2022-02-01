@@ -2,9 +2,11 @@ package setup
 
 import com.fasterxml.jackson.databind.ObjectMapper
 
-// docs at https://github.com/FasterXML/jackson-module-kotlin/blob/master/README.md
+
+
 interface JacksonBuilder {
     val mapper: ObjectMapper
+    val fileName: String
 }
 
 interface Builder<T> {
