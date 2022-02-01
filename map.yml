@@ -1,4 +1,4 @@
-rooms: 
+rooms:
   # First room
   - name: Test room
     description: This is a sandbox room where we can test things out
@@ -14,18 +14,18 @@ rooms:
         matchers: [food]
         oneShot:
           hp: 2
-      - name: key
-        description: key opens side room
-        matchers: [keys]
-        keyLock:
-          source: Test room
-          destination:
-            name: Side room
-            description: Side room created with key lock
-            items:
-              - name: foo
-                description: just a test item in key lock room
-          direction: W
+#      - name: key
+#        description: key opens side room
+#        matchers: [keys]
+#        keyLock:
+#          source: Test room
+#          destination:
+#            name: Side room
+#            description: Side room created with key lock
+#            items:
+#              - name: foo
+#                description: just a test item in key lock room
+#          direction: W
       - name: random
         description: random observable not grabbable
     npcs:

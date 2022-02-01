@@ -1,5 +1,6 @@
 package entities
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import util.Direction
 
 class GameMap {
@@ -20,4 +21,10 @@ class GameMap {
     fun set(room: Room, newRoom: Room, direction: Direction) = map[room]?.set(direction, newRoom)
 
     fun getRoomByName(name: String): Room? = map.entries.singleOrNull { it.key.matches(name) }?.key
+
+    // DESERIALIZATION LOGIC
+    @JsonProperty("rooms")
+    private fun deserializeRoot(data: List<Room>) {
+        println("THE ROOMS ARE: $data")
+    }
 }
