@@ -1,9 +1,7 @@
-name: bread
-description: bread hp +2
-matchers:
-  - food
-#oneShot:
-#  hp: 2
-equip:
-  poison: 2
-  part: NECK
+- name: bread
+  description: bread hp +2
+  type: KEY_LOCK
+  matchers:
+    - food
+  effect:
+
