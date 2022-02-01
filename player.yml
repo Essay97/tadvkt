@@ -1,7 +1,7 @@
 # player:
 name: Enrico
 description: the hero of the story
-hp: 90
+hp: 35
 maxAttack: 10
 items:
   - name: thing

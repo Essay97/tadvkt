@@ -18,12 +18,7 @@ class MoveCommand(private val mover: Movable, private val direction: Direction, 
     }
 
     override fun undoAction() {
-        when (direction) {
-            Direction.N -> mover.move(Direction.S)
-            Direction.S -> mover.move(Direction.N)
-            Direction.W -> mover.move(Direction.E)
-            Direction.E -> mover.move(Direction.W)
-        }
+        mover.move(direction.opposite())
         printPosition()
     }
 

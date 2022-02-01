@@ -17,7 +17,6 @@ class GameMap() {
         connections.forEach { conn ->
             val room = getRoomByID(conn.roomID, rooms)
                 ?: throw DeserializingException("Trying to reference an undeclared roomID: ${conn.roomID}")
-            println("Working on ${room.name}")
             val roomN = getRoomByID(conn.N, rooms)
             val roomS = getRoomByID(conn.S, rooms)
             val roomE = getRoomByID(conn.E, rooms)

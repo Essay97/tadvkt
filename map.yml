@@ -4,18 +4,19 @@ rooms:
     items:
       - name: sword
         description: sword attack +3
-        matchers: [ katana ]
+        matchers: [ sword, katana ]
         type: EQUIP
         effect:
           attack: 3
         bodyPart: RIGHT_HAND
       - name: bread
         description: bread hp +2
-        matchers: [ food ]
+        matchers: [ bread, food ]
         type: ONE_SHOT
         effect:
           hp: 2
       - name: key
+        matchers: [ key ]
         description: opens a little room
         type: KEY_LOCK
         effect:

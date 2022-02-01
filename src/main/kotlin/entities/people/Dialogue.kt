@@ -22,8 +22,8 @@ class DialogueTemplate(@JsonUnwrapped private val chunks: List<DialogueChunk>): 
             }
             while (true) {
                 try {
-                    val input = Input.prompt()?.toInt()?.minus(1)
-                    println("YOU: ${it.responses[input ?: throw Exception()]}")
+                    val input = Input.prompt().toInt() - 1
+                    println("YOU: ${it.responses[input]}")
                     break
                 } catch (e: Exception) {
                     println("Choose one from the options!")

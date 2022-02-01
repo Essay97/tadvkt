@@ -12,7 +12,7 @@ import entities.people.Talker
 import util.Direction
 import util.Input
 
-abstract class Command(val reversible: Boolean, val counting: Boolean, val state: GameState? = null) {
+abstract class Command(val reversible: Boolean, private val counting: Boolean, val state: GameState? = null) {
     fun execute() {
         if (counting) {
             state?.incrementActionsCount() ?: throw IllegalStateException(
@@ -50,6 +50,7 @@ abstract class Command(val reversible: Boolean, val counting: Boolean, val state
             if (input.startsWith("examine")) {
                 val arg = Input.extractArgument("examine", input)
                 val examinable = findExaminable(arg, player)
+                println("FOUND ${examinable?.description}")
                 return ExamineCommand(state, examinable)
             }
 

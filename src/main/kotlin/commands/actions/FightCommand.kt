@@ -73,7 +73,7 @@ class FightCommand(private val player: Player, state: GameState, private val ene
 
             do {
                 println("Choose one of the options")
-                val input = Input.prompt()?.toInt()
+                val input = Input.prompt().toInt()
 
                 when (input) {
                     1 -> fighter.attack(target)
@@ -99,8 +99,8 @@ class FightCommand(private val player: Player, state: GameState, private val ene
                 println("Which item do you want to use? Choose one of the following: ")
                 oneshots.mapIndexed { i, item -> "\t${i + 1} - ${item.name}" }
                     .forEach { println(it) }
-                input = Input.prompt()?.toInt()?.minus(1)
-            } while (input in 1 until player.inventory.size && input != null)
+                input = Input.prompt().toInt().minus(1)
+            } while (input in 1 until player.inventory.size)
             player.inventory[input!!].use(player)
         }
     }
