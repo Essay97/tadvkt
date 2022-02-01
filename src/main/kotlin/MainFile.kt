@@ -1,18 +1,23 @@
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import commands.Command
 import entities.GameMap
 import entities.GameState
 import entities.Room
-import entities.items.*
 import entities.people.*
-import util.Direction
-import util.EquipPart
+import setup.ItemDTO
+import setup.JacksonMapBuilder
+import setup.JacksonPlayerBuilder
+import java.io.File
 
 fun main() {
     val map = GameMap()
 
     // Map creation
     // Create test room
-    val test = makeTestRoom(map)
+    /*val test = makeTestRoom(map)
 
     val eq1 = EquipItem("sword", "sword poison +3", StatsEffect(poison = 3), EquipPart.RIGHT_HAND)
     val eq2 = EquipItem("knife", "knife stun +2", StatsEffect(stun = 2), EquipPart.RIGHT_HAND)
@@ -36,9 +41,22 @@ fun main() {
     Command.make("inventory", player, state)?.execute()
     Command.make("takeoff bracelet", player, state)?.execute()
     Command.make("equip", player, state)?.execute()
+    Command.make("inventory", player, state)?.execute()*/
+
+    val playerBuilder = JacksonPlayerBuilder(YAMLFactory(), File("player.yml"))
+    val mapBuilder = JacksonMapBuilder(YAMLFactory(), File("map.yml"))
+
+    val gameMap = mapBuilder.build()
+
+    val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
+    val item = mapper.readValue<ItemDTO>(File("oneshot.yml")).toItem()
+    println(item.name)
+
+    val state = GameState()
+    val player = playerBuilder.build()
+    println(player.description)
+    Command.make("equip", player, state)?.execute()
     Command.make("inventory", player, state)?.execute()
-
-
 }
 
 

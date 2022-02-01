@@ -1,10 +1,13 @@
 package entities.people
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import entities.GameMap
 import entities.Movable
 import entities.Room
 import entities.items.EquipItem
 import entities.items.GrabbableItem
+import exceptions.DeserializingException
+import setup.ItemDTO
 import util.Direction
 import util.EquipPart
 
@@ -45,11 +48,29 @@ class Player(name: String, description: String) : Character(name, description), 
         return gameMap?.get(currentRoom, direction) != null
     }
 
-    fun grab(match: String) {
-        currentRoom.items.firstOrNull { it.matches(match) && it is GrabbableItem}?.let {
-            inventory.add(it as GrabbableItem)
-            currentRoom.items.remove(it)
-        } ?: println("Oh, you can't grab that")
+    @JsonProperty("items")
+    private fun deserializeInventory(items: List<ItemDTO>) {
+        val converted = items.map { it.toItem(gameMap) }
+        if (converted.all { it is GrabbableItem }) {
+            items.map { it.toItem(gameMap) as GrabbableItem }.forEach { inventory.add(it) }
+        } else {
+            throw DeserializingException("The inventory of the player is bad formed: all the items must be grabbable")
+        }
     }
 
+    @JsonProperty("equip")
+    private fun deserializeEquip(items: List<ItemDTO>) {
+        val converted = items.map { it.toItem(gameMap) }
+        if (converted.all { it is EquipItem }) {
+            converted.map { it as EquipItem }.forEach {
+                if (equip.containsKey(it.bodyPart)) {
+                    throw DeserializingException("The equip of the player is bad formed: body parts can be equipped only once")
+                } else {
+                    equip[it.bodyPart] = it
+                }
+            }
+        } else {
+            throw DeserializingException("The equip of the player is bad formed: all the items must have an equip attribute")
+        }
+    }
 }

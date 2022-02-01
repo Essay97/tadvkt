@@ -9,7 +9,7 @@ interface Dialogue {
 
 class DialogueChunk(val message: String, val responses: List<String>)
 
-class DialogueTemplate(val chunks: List<DialogueChunk>): Dialogue {
+class DialogueTemplate(private val chunks: List<DialogueChunk>): Dialogue {
     override fun doDialogue(talkerName: String) {
         val delay = 1200
         chunks.forEach {

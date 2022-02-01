@@ -3,11 +3,10 @@ package entities
 import util.Direction
 
 class GameMap {
-    val map: MutableMap<Room, MutableMap<Direction, Room>> = mutableMapOf()
+    private val map: MutableMap<Room, MutableMap<Direction, Room>> = mutableMapOf()
     lateinit var entry: Room
         private set
 
-    // ALTERNATIVE
     fun firstRoom(room: Room) {
         if (map.isNotEmpty()) {
             throw IllegalStateException("This map already has a first room, it's ${entry.name}")

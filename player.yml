@@ -1,0 +1,16 @@
+# player:
+name: Enrico
+description: the hero of the story
+hp: 90
+maxAttack: 10
+items:
+  - name: thing
+    description: just a test
+    oneShot:
+      poison: -3
+equip:
+  - name: shield
+    description: this shield is equipped by default
+    equip:
+      part: LEFT_HAND
+      stun: -1
