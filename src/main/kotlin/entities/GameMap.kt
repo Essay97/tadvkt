@@ -3,17 +3,17 @@ package entities
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import exceptions.DeserializingException
-import setup.GameMapDTO
 import util.Direction
 import util.getRoomByID
 import util.insertNotNull
 
+private class Connection(val roomID: String, val N: String?, val S: String?, val W: String?, val E: String?)
 
 class GameMap() {
 
     @Suppress("unused")
     @JsonCreator
-    private constructor(rooms: List<Room>, connections: List<GameMapDTO.Connection>) : this() {
+    private constructor(rooms: List<Room>, connections: List<Connection>) : this() {
         var insertedFirst = false
 
         connections.forEach { conn ->
