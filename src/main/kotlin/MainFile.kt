@@ -1,13 +1,10 @@
-import cli.Test
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import commands.Command
 import commands.Invoker
 import entities.GameState
-import picocli.CommandLine
 import setup.JacksonMapBuilder
 import setup.JacksonPlayerBuilder
 import util.Input
-import kotlin.system.exitProcess
 
 class Main {
     companion object {

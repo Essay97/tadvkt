@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+
 plugins {
     kotlin("jvm") version "1.5.10"
     application
@@ -7,7 +8,7 @@ plugins {
 }
 
 group = "me.enrico"
-version = "1.0-SNAPSHOT"
+version = "1.0.1"
 
 repositories {
     mavenCentral()
@@ -31,6 +32,7 @@ kapt {
     arguments {
         arg("project", "${project.group}/${project.name}")
     }
+    includeCompileClasspath = false
 }
 
 tasks.test {
@@ -57,3 +59,4 @@ tasks {
         dependsOn(fatJar) // Trigger fat jar creation during build
     }
 }
+

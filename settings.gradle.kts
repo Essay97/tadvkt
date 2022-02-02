@@ -1,3 +1,3 @@
 
-rootProject.name = "kttest"
+rootProject.name = "tadvkt"
 
