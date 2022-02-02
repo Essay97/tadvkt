@@ -1,3 +1,4 @@
+
 package commands
 
 import commands.actions.*
@@ -12,7 +13,7 @@ import entities.people.Talker
 import util.Direction
 import util.Input
 
-abstract class Command(val reversible: Boolean, private val counting: Boolean, val state: GameState? = null) {
+abstract class Command(open val reversible: Boolean, private val counting: Boolean, val state: GameState? = null) {
     fun execute() {
         if (counting) {
             state?.incrementActionsCount() ?: throw IllegalStateException(

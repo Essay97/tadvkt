@@ -7,6 +7,7 @@ import entities.people.Player
 
 class DropCommand(private val player: Player, state: GameState, private val item: GrabbableItem?):
     Command(true, true, state) {
+
     override fun doAction() {
         if (item != null) {
             player.inventory.remove(item)
