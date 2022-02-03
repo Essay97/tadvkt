@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "me.enrico"
-version = "1.0.1"
+version = "1.0.4"
 
 repositories {
     mavenCentral()
@@ -25,7 +25,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("cli.Test")
+    mainClass.set("cli.Adventure")
 }
 
 kapt {

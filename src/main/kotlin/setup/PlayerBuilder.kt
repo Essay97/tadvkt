@@ -7,18 +7,18 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import entities.people.Player
 import java.io.File
 
-
-// docs at https://github.com/FasterXML/jackson-module-kotlin/blob/master/README.md
-
-
 abstract class PlayerBuilder: Builder<Player>
-
 
 class DefaultPlayerBuilder: PlayerBuilder() {
     override fun build(): Player {
-        TODO("Not yet implemented")
+        return Player("John Doe", "John is just a man wandering in a little map. " +
+                "He helps you to test the engine :)").apply {
+            hp = 20
+            maxAttack = 7
+        }
     }
 }
+
 class PromptPlayerBuilder: PlayerBuilder() {
     override fun build(): Player {
         TODO("Not yet implemented")
