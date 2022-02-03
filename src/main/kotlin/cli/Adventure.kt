@@ -1,8 +1,8 @@
 package cli
 
 import picocli.CommandLine
-import picocli.CommandLine.*
-import java.io.PrintWriter
+import picocli.CommandLine.Command
+import picocli.CommandLine.HelpCommand
 import java.util.concurrent.Callable
 import kotlin.system.exitProcess
 
@@ -14,9 +14,6 @@ import kotlin.system.exitProcess
     ], mixinStandardHelpOptions = true, synopsisSubcommandLabel = "COMMAND"
 )
 class Adventure: Callable<Int> {
-
-//    @Parameters(index = "0")
-//    var player: String = ""
 
     override fun call(): Int {
 

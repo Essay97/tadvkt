@@ -1,11 +1,10 @@
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import commands.Command
 import commands.Invoker
 import entities.GameMap
 import entities.GameState
 import entities.people.Player
-import setup.JacksonMapBuilder
-import setup.JacksonPlayerBuilder
+import setup.PromptMapBuilder
+import setup.PromptPlayerBuilder
 import util.Input
 import util.Output
 
@@ -14,12 +13,11 @@ class Main {
         @JvmStatic
         fun main(args: Array<String>) {
 
+            val player = PromptPlayerBuilder().build()
+            val map = PromptMapBuilder().build()
             val state = GameState()
-            val map = JacksonMapBuilder(YAMLFactory(), "map.yml").build()
-            val player = JacksonPlayerBuilder(YAMLFactory(), "player.yml").build()
 
             gameLoop(player, map, state)
-
         }
     }
 }

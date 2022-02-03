@@ -8,17 +8,16 @@ import entities.people.Player
 import gameLoop
 import picocli.CommandLine.Option
 import picocli.CommandLine.Command
-import setup.JacksonMapBuilder
-import setup.JacksonPlayerBuilder
-import setup.MapBuilder
+import setup.*
 import java.util.concurrent.Callable
 
-@Command(name = "create", description = ["Create a new game by passing a player and a map"])
+@Command(name = "create", description = ["Create a new game", "For parameters that need a file, the supported formats are" +
+        "JSON and YAML"])
 class AdventureCreate: Callable<Int> {
 
-    @Option(names = ["--player", "-p"], required = true)
+    @Option(names = ["--player", "-p"], description = ["the file used to configure the player"])
     lateinit var playerFile: String
-    @Option(names = ["--map", "-m"], required = true)
+    @Option(names = ["--map", "-m"], description = ["the file used to configure the player"])
     lateinit var mapFile: String
 
     private lateinit var player: Player
@@ -26,7 +25,10 @@ class AdventureCreate: Callable<Int> {
 
     override fun call(): Int {
 
-        player = (if (playerFile.endsWith(".yml") or playerFile.endsWith(".YML")
+
+        player = (if (!this::playerFile.isInitialized) {
+            PromptPlayerBuilder()
+        } else if (playerFile.endsWith(".yml") or playerFile.endsWith(".YML")
             or playerFile.endsWith(".yaml") or playerFile.endsWith(".YAML")) {
             JacksonPlayerBuilder(YAMLFactory(), playerFile)
         } else if (playerFile.endsWith(".json") or playerFile.endsWith(".JSON")) {
@@ -36,7 +38,9 @@ class AdventureCreate: Callable<Int> {
             return 1
         }).build()
 
-        map = (if (mapFile.endsWith(".yml") or mapFile.endsWith(".YML")
+        map = (if (!this::mapFile.isInitialized) {
+            PromptMapBuilder()
+        } else if (mapFile.endsWith(".yml") or mapFile.endsWith(".YML")
             or mapFile.endsWith(".yaml") or mapFile.endsWith(".YAML")) {
             JacksonMapBuilder(YAMLFactory(), mapFile)
         } else if (mapFile.endsWith(".json") or mapFile.endsWith(".JSON")) {

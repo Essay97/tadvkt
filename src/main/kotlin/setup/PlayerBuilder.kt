@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import entities.people.Player
+import util.Input
 import java.io.File
+import java.io.FileNotFoundException
 
 abstract class PlayerBuilder: Builder<Player>
 
@@ -20,14 +22,32 @@ class DefaultPlayerBuilder: PlayerBuilder() {
 }
 
 class PromptPlayerBuilder: PlayerBuilder() {
-    override fun build(): Player {
-        TODO("Not yet implemented")
-    }
-}
 
-class DummyPlayerBuilder: PlayerBuilder() {
+    private fun name(): String {
+        println("Player name: ")
+        return Input.prompt()
+    }
+
+    private fun description(): String {
+        println("Player description: ")
+        return Input.prompt()
+    }
+
+    private fun hp(): Int {
+        println("Player health points: ")
+        return Input.prompt().toInt()
+    }
+
+    private fun maxAttack(): Int {
+        println("Player maximum damage: ")
+        return Input.prompt().toInt()
+    }
+
     override fun build(): Player {
-        TODO("Not yet implemented")
+        return Player(name(), description()).apply {
+            hp = hp()
+            maxAttack = maxAttack()
+        }
     }
 }
 
@@ -35,7 +55,12 @@ class JacksonPlayerBuilder(factory: JsonFactory, override val fileName: String):
     override val mapper = ObjectMapper(factory).registerKotlinModule()
 
     override fun build(): Player {
-        return mapper.readValue(File(fileName))
+        return try {
+            mapper.readValue(File(fileName))
+        } catch (e: FileNotFoundException) {
+            println("Could not find file $fileName, falling back to default map")
+            DefaultPlayerBuilder().build()
+        }
     }
 }
 
