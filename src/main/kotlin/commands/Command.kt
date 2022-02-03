@@ -51,7 +51,6 @@ abstract class Command(open val reversible: Boolean, private val counting: Boole
             if (input.startsWith("examine")) {
                 val arg = Input.extractArgument("examine", input)
                 val examinable = findExaminable(arg, player)
-                println("FOUND ${examinable?.description}")
                 return ExamineCommand(state, examinable)
             }
 
