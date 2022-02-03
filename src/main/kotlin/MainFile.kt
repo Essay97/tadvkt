@@ -7,6 +7,7 @@ import entities.people.Player
 import setup.JacksonMapBuilder
 import setup.JacksonPlayerBuilder
 import util.Input
+import util.Output
 
 class Main {
     companion object {
@@ -25,6 +26,8 @@ class Main {
 
 fun gameLoop(player: Player, map: GameMap, state: GameState) {
     player.gameMap = map
+    println("THE ADVENTURE BEGINS")
+    Output.tutorial()
     println(player.currentRoom.name.uppercase())
     println(player.currentRoom.description)
     while (state.isRunning) {

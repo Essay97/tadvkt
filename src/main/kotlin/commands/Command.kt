@@ -3,6 +3,7 @@ package commands
 
 import commands.actions.*
 import commands.data.*
+import commands.gameflow.QuitCommand
 import entities.Examinable
 import entities.GameState
 import entities.items.EquipItem
@@ -101,6 +102,8 @@ abstract class Command(open val reversible: Boolean, private val counting: Boole
                 "move S" -> MoveCommand(player, Direction.S, state)
                 "move W" -> MoveCommand(player, Direction.W, state)
                 "move E" -> MoveCommand(player, Direction.E, state)
+                "tutorial" -> TutorialCommand()
+                "quit" -> QuitCommand(state)
                 "undo" -> null
                 else -> NoCommand()
             }
