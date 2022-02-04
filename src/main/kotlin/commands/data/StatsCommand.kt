@@ -5,7 +5,7 @@ import entities.people.Player
 
 class StatsCommand(private val player: Player): Command(false, false) {
     override fun doAction() {
-        println("${player.name} is pure power")
+        println("${player.name} is pure power") //StatsHeader
         println("HP: ${player.hp}")
         println("STUNNED: ${player.stunned}")
         println("POISONED: ${player.poisoned}")

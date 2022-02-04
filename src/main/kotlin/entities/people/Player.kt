@@ -39,12 +39,12 @@ class Player(name: String, description: String) : Character(name, description), 
         if (canMove(direction)) {
             currentRoom = gameMap?.get(currentRoom, direction)!!
         } else {
-            println("I don't think you can go there")
+            println("I don't think $name can go there") //PlayerCantMove
         }
 
     }
 
-    override fun canMove(direction: Direction): Boolean {
+    private fun canMove(direction: Direction): Boolean {
         return gameMap?.get(currentRoom, direction) != null
     }
 

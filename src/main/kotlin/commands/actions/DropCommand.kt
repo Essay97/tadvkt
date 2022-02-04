@@ -11,15 +11,15 @@ class DropCommand(private val player: Player, state: GameState, private val item
     override fun doAction() {
         if (item != null) {
             player.inventory.remove(item)
-            println("${player.name} threw " + item.name + " away.")
+            println("${player.name} threw ${item.name} away.") // ThrewAway
             player.currentRoom.items.add(item)
         } else {
-            println("${player.name} doesn't own anything like that")
+            println("${player.name} doesn't own anything like that") // DoesntOwn
         }
     }
 
     override fun undoAction() {
         player.inventory.add(item!!)
-        println("${player.name} puts ${item.name} back in the inventory.")
+        println("${player.name} puts ${item.name} back in the inventory.") //BackInInventory
     }
 }

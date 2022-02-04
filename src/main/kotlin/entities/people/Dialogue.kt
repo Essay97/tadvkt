@@ -26,7 +26,7 @@ class DialogueTemplate(@JsonUnwrapped private val chunks: List<DialogueChunk>): 
                     println("YOU: ${it.responses[input]}")
                     break
                 } catch (e: Exception) {
-                    println("Choose one from the options!")
+                    println("Choose one from the options!") //OptionOutOfBounds
                 }
             }
         }

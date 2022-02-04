@@ -18,7 +18,7 @@ class KeyLockEffect(@JsonProperty("source") val sourceID: String, val destinatio
         if (player.currentRoom == source) {
             player.gameMap?.set(source, destination, direction)
         } else {
-            println("You cannot use this item here.")
+            println("You cannot use this item here.") //KeyLockWrongRoom
         }
     }
 }

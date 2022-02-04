@@ -13,6 +13,6 @@ object Invoker {
     }
 
     fun uninvoke() {
-        history.pollLast()?.unexecute() ?: println("You can't go back further")
+        history.pollLast()?.unexecute() ?: println("You can't go back further") // NoUndo
     }
 }

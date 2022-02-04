@@ -8,6 +8,6 @@ import entities.people.Player
 class UseItemCommand(private val player: Player, state: GameState, private val item: GrabbableItem?):
     Command(false, true, state) {
     override fun doAction() {
-        item?.use(player) ?: println("What do you want to use?")
+        item?.use(player) ?: println("What do you want to use?") //NoGrabbableItem
     }
 }

@@ -18,15 +18,15 @@ interface Fighter: Matchable {
 
     fun attack(enemy: Fighter) {
         val delay = 1200
-        Output.postDelayed(delay, "$name attacks!")
+        Output.postDelayed(delay, "$name attacks!") //FighterAttacks
         if (!enemy.isDefending) {
             val atk = getDamage()
-            println("$name rolls a $atk!")
+            println("$name rolls a $atk!") //FighterAtkRoll
             enemy.hp -= atk
             val printHP = max(enemy.hp, 0)
-            Output.postDelayed(delay, "${enemy.name} has $printHP HP left.")
+            Output.postDelayed(delay, "${enemy.name} has $printHP HP left.") //EnemyHPLeft
         } else {
-            println("${enemy.name} defends!")
+            println("${enemy.name} defends!") //EnemyDefends
             enemy.isDefending = false
         }
     }

@@ -9,12 +9,8 @@ import util.Direction
 class MoveCommand(private val mover: Movable, private val direction: Direction, state: GameState):
     Command(true, true, state) {
     override fun doAction() {
-        if (mover.canMove(direction)) {
-            mover.move(direction)
-            printPosition()
-        } else {
-            println("This is not possible")
-        }
+        mover.move(direction)
+        printPosition()
     }
 
     override fun undoAction() {
@@ -24,7 +20,7 @@ class MoveCommand(private val mover: Movable, private val direction: Direction, 
 
     private fun printPosition() {
         if (mover is Player) {
-            println("${mover.name} moves in ${mover.currentRoom.name}")
+            println("${mover.name} moves in ${mover.currentRoom.name}") //PlayerMoves
         }
     }
 

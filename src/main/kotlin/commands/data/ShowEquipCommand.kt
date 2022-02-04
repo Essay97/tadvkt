@@ -5,7 +5,7 @@ import entities.people.Player
 
 class ShowEquipCommand(private val player: Player): Command(false, false) {
     override fun doAction() {
-        println("${player.name} has quite an equipment. He has:")
+        println("${player.name} has quite an equipment. He has:") //EquipHeader
         player.equip.toList().map { "\t- ${it.second.name}" }.forEach(::println)
     }
 }

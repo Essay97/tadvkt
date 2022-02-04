@@ -11,9 +11,9 @@ class FightCommand(private val player: Player, state: GameState, private val ene
     Command(false, true, state) {
     override fun doAction() {
         if (enemy == null) {
-            println("Who do you want to fight with?")
+            println("Who do you want to fight with?") //NoFighter
         } else {
-            println("FIGHT STARTS!")
+            println("FIGHT STARTS!") //FightStarts
             while (player.hp > 0 && enemy.hp > 0) {
                 applyStatus(player)
                 if (player.stunned < 1) {
@@ -27,11 +27,11 @@ class FightCommand(private val player: Player, state: GameState, private val ene
                 }
             }
             if (player.hp <= 0) {
-                println("${player.name} lost!")
+                println("${player.name} lost!") //PlayerLostFight
             } else if (enemy.hp <= 0) {
-                println("${enemy.name} lost!")
+                println("${enemy.name} lost!") //EnemyLostFight
             } else {
-                println("It's a tie")
+                println("It's a tie") //TiedFight
             }
         }
     }
@@ -40,39 +40,23 @@ class FightCommand(private val player: Player, state: GameState, private val ene
         if (fighter.burned > 0) {
             fighter.hp--
             fighter.burned--
-            println("The burn is hurting ${fighter.name}! He has ${fighter.hp} HP")
+            println("The burn is hurting ${fighter.name}! He has ${fighter.hp} HP") //BurnDamage
         }
         if (fighter.poisoned > 0) {
             fighter.hp -= 2
             fighter.poisoned--
-            println("The poison is killing ${fighter.name}! He has ${fighter.hp} HP")
+            println("The poison is killing ${fighter.name}! He has ${fighter.hp} HP") //PoisonDamage
         }
     }
 
     private fun chooseAction(fighter: Fighter, target: Fighter) {
         if (fighter is Player) {
-            println("What do you want to do?")
+            println("What do you want to do?") //ChooseFightAction
             val options = listOf("attack", "defend", "use item")
             options.mapIndexed { i, text -> "\t${i+1} - $text" }.forEach { println(it) }
 
-//            while (true) {
-//                try {
-//                    val input = Input.prompt()?.toInt()
-//                    println("You chose $input")
-//                    when (input) {
-//                        1 -> fighter.attack(target)
-//                        2 -> fighter.isDefending = true
-//                        3 -> handleItemUsage(fighter)
-//                        else -> throw Exception()
-//                    }
-//                } catch (e: Exception) {
-//                    println("Choose one of the options.")
-//                }
-//            }
-
-
             do {
-                println("Choose one of the options")
+                println("Choose one of the options") //OptionOutOfBounds
                 val input = Input.prompt().toInt()
 
                 when (input) {
@@ -92,11 +76,11 @@ class FightCommand(private val player: Player, state: GameState, private val ene
     private fun handleItemUsage(player: Player) {
         val oneshots = player.inventory.filterIsInstance<OneShotItem>()
         if (oneshots.isEmpty()) {
-            println("${player.name} wanted to use an item but he has no one!")
+            println("${player.name} wanted to use an item but he has no one!") //PlayerFightNoItem
         } else {
             var input: Int?
             do {
-                println("Which item do you want to use? Choose one of the following: ")
+                println("Which item do you want to use? Choose one of the following: ") //ChooseItemFight
                 oneshots.mapIndexed { i, item -> "\t${i + 1} - ${item.name}" }
                     .forEach { println(it) }
                 input = Input.prompt().toInt().minus(1)
